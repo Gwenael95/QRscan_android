@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         viewModel.pokemonState.observe(this, Observer { updateUi(it!!) })
-        viewModel.loadPokemon(1)
+        viewModel.loadPokemon(888005444)
 
         setContentView(R.layout.activity_main)
     }

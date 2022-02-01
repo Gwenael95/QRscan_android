@@ -17,6 +17,6 @@ interface ApiService {
 
     // case with url like api/pokemons?id=1
     //@GET("pokemon")
-    //suspend fun getCommentsByPost(@Query("id") siren : Int): Response<Pokemon>
+    //suspend fun getCommentsByPost(@Query("id") id : Int): Response<Pokemon>
 
 }

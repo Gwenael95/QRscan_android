@@ -1,16 +1,16 @@
 package com.geta.qr_scan.api
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 object ApiClient {
     private const val BASE_URL: String = "https://pokemon_api/" //@TODO change api url Base
 
-    private val gson : Gson by lazy {
-        GsonBuilder().setLenient().create()
+    private val moshi : Moshi by lazy {
+        Moshi.Builder().build()
+        //GsonBuilder().setLenient().create() // with GSon
     }
 
     private val httpClient : OkHttpClient by lazy {
@@ -21,7 +21,8 @@ object ApiClient {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            // .addConverterFactory(GsonConverterFactory.create(gson)) // with GSon
             .build()
     }
 

@@ -23,6 +23,7 @@ class PokemonListViewModel : ViewModel() {
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()
                     pokemonState.postValue(PokemonListState.Success(content!!))
+                    Log.w("Pokemon VIEW_MODEL R", content.toString())
                 } else {
                     pokemonState.postValue(PokemonListState.Failure("can't get pokemon data"))
                 }

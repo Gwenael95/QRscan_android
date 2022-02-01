@@ -9,4 +9,3 @@ data class Pokemon(
     val type: String,
     val updatedAt : String //= now().toString() (@require v26^, current is 21^)
 )
-
