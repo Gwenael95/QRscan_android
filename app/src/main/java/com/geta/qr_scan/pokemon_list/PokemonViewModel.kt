@@ -9,11 +9,11 @@ import com.geta.qr_scan.api.ApiClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PokemonListViewModel : ViewModel() {
-    val pokemonState = MutableLiveData<PokemonListState>()
+class PokemonViewModel : ViewModel() {
+    val pokemonState = MutableLiveData<PokemonState>()
 
     fun loadPokemon(id: Int) {
-        pokemonState.postValue(PokemonListState.Loading)
+        pokemonState.postValue(PokemonState.Loading)
 
         // Create a new coroutine to move the execution off the UI thread
         viewModelScope.launch(Dispatchers.IO) {
@@ -22,27 +22,27 @@ class PokemonListViewModel : ViewModel() {
                 Log.w("Pokemon VIEW_MODEL", response.toString())
                 if (response.isSuccessful && response.body() != null) {
                     val content = response.body()
-                    pokemonState.postValue(PokemonListState.Success(content!!))
+                    pokemonState.postValue(PokemonState.Success(content!!))
                     Log.w("Pokemon VIEW_MODEL R", content.toString())
                 } else {
-                    pokemonState.postValue(PokemonListState.Failure("can't get pokemon data"))
+                    pokemonState.postValue(PokemonState.Failure("can't get pokemon data"))
                 }
             }
             catch (e: Exception) {
                 Log.e("PokemonViewModel", e.toString())
-                pokemonState.postValue(PokemonListState.Failure("Error when calling Api, $e"))
+                pokemonState.postValue(PokemonState.Error(e))
             }
         }
     }
 }
 
-sealed class PokemonListState(
+sealed class PokemonState(
     open val errorMessage: String = "can't load pokemon"
 ) {
-    object Loading : PokemonListState()
-    data class Error(val error : Exception) : PokemonListState()
-    data class Success(val pokemon: Pokemon) : PokemonListState()
-    data class Failure(override val errorMessage: String) : PokemonListState(
+    object Loading : PokemonState()
+    data class Error(val error : Exception) : PokemonState()
+    data class Success(val pokemon: Pokemon) : PokemonState()
+    data class Failure(override val errorMessage: String) : PokemonState(
         errorMessage = errorMessage
     )
 }

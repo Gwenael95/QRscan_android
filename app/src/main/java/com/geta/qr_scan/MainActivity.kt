@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.geta.qr_scan.pokemon_list.PokemonListState
-import com.geta.qr_scan.pokemon_list.PokemonListViewModel
+import com.geta.qr_scan.pokemon_list.PokemonState
+import com.geta.qr_scan.pokemon_list.PokemonViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel : PokemonListViewModel by viewModels()
+    private val viewModel : PokemonViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,18 +21,18 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun updateUi(state: PokemonListState) {
+    private fun updateUi(state: PokemonState) {
         return when (state) {
-            is PokemonListState.Success -> {
-                displayToast(this, "Login OK pour pokemon ${state.pokemon.siren}! ")
+            is PokemonState.Success -> {
+                displayToast(this, "Login OK pour pokemon ${state.pokemon.name}! ")
             }
-            is PokemonListState.Failure -> {
+            is PokemonState.Failure -> {
                 displayToast(this, state.errorMessage)
             }
-            is PokemonListState.Loading -> {
+            is PokemonState.Loading -> {
                 // loading element
             }
-            is PokemonListState.Error -> displayToast(this, state.errorMessage)
+            is PokemonState.Error -> displayToast(this, state.errorMessage)
         }
     }
 }
